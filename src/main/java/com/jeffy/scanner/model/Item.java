@@ -82,4 +82,18 @@ public class Item  extends Model implements Serializable {
     public void setPeriod(long period) {
         this.period = period;
     }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "name='" + name + '\'' +
+                ", systemId=" + systemId +
+                ", object='" + object + '\'' +
+                ", attribute='" + attribute + '\'' +
+                ", delay=" + delay +
+                ", period=" + period +
+                ", createTime=" + getCreateTime() +
+                ", updateTime=" + getUpdateTime() +
+                '}';
+    }
 }

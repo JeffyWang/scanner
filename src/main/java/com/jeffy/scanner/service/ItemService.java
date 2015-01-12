@@ -18,19 +18,27 @@ public class ItemService {
         this.itemDao = itemDao;
     }
 
-    public Item getSystem(int systemId) {
-        return itemDao.getById(systemId);
+    public Item getItem(int itemId) {
+        return itemDao.getById(itemId);
     }
 
-    public Item getSystem(String name) {
-        return itemDao.getByName(name);
+    public List<Item> getSystemItems(int systemId) {
+        return itemDao.getSystemItems(systemId);
     }
 
-    public List<Item> getAllSystem() {
-        return itemDao.getAll();
+    public List<Item> getSystemItemsForPage(int systemId, String order, int pageNumber, int pageSize) {
+        return itemDao.getSystemItemsForPage(systemId, order, pageNumber * pageSize, pageSize);
     }
 
-    public List<Item> getSystemForPage(String order, int pageNumber, int pageSize) {
-        return null;
+    public int addItem(Item item) {
+        return itemDao.add(item);
+    }
+
+    public int updateItem(Item item) {
+        return itemDao.update(item);
+    }
+
+    public int deleteItem(int itemId) {
+        return itemDao.deleteById(itemId);
     }
 }

@@ -3,6 +3,7 @@ package com.jeffy.scanner;
 import com.jeffy.scanner.dao.DataDao;
 import com.jeffy.scanner.dao.ItemDao;
 import com.jeffy.scanner.dao.SystemDao;
+import com.jeffy.scanner.handler.MonitorHandler;
 import com.jeffy.scanner.model.Data;
 import com.jeffy.scanner.model.Item;
 import com.jeffy.scanner.resource.DataResource;
@@ -55,6 +56,11 @@ public class Application extends io.dropwizard.Application<Configuration> {
         SystemService systemService = new SystemService(systemDao);
         ItemService itemService = new ItemService(systemDao, itemDao);
         DataService dataService = new DataService(systemDao, itemDao, dataDao);
+
+        //init handler
+        log.debug("Init handler");
+        MonitorHandler monitorHandler = new MonitorHandler(systemService, itemService, dataService);
+        monitorHandler.execute();
 
         //resource
         log.debug("Init resource");

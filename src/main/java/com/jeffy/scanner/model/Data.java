@@ -46,4 +46,15 @@ public class Data extends Model implements Serializable {
     public void setItemId(int itemId) {
         this.itemId = itemId;
     }
+
+    @Override
+    public String toString() {
+        return "Data{" +
+                "key='" + key + '\'' +
+                ", value='" + value + '\'' +
+                ", itemId=" + itemId +
+                ", createTime=" + getCreateTime() +
+                ", updateTime=" + getUpdateTime() +
+                '}';
+    }
 }
