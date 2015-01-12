@@ -48,4 +48,15 @@ public class System extends Model implements Serializable {
     public void setPort(int port) {
         this.port = port;
     }
+
+    @Override
+    public String toString() {
+        return "System{" +
+                "name='" + name + '\'' +
+                ", host='" + host + '\'' +
+                ", port=" + port +
+                ", createTime=" + getCreateTime() +
+                ", updateTime=" + getUpdateTime() +
+                '}';
+    }
 }

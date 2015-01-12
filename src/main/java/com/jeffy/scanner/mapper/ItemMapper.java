@@ -14,7 +14,7 @@ public class ItemMapper implements ResultSetMapper<Item> {
     @Override
     public Item map(int i, ResultSet resultSet, StatementContext statementContext) throws SQLException {
         return new Item(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getInt("systemId"),
-                resultSet.getString("object"), resultSet.getString("attribute"), resultSet.getTimestamp("createTime"),
-                resultSet.getTimestamp("updateTime"));
+                resultSet.getString("object"), resultSet.getString("attribute"), resultSet.getLong("delay"),
+                resultSet.getLong("period"), resultSet.getTimestamp("createTime"), resultSet.getTimestamp("updateTime"));
     }
 }

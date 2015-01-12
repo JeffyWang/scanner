@@ -14,17 +14,21 @@ public class Item  extends Model implements Serializable {
     private int systemId;
     private String object;
     private String attribute;
+    private long delay;
+    private long period;
 
     public Item() {
         super();
     }
 
-    public Item(int id, String name, int systemId, String object, String attribute, Date createTime, Date updateTime) {
+    public Item(int id, String name, int systemId, String object, String attribute, long delay, long period, Date createTime, Date updateTime) {
         super(id, createTime, updateTime);
         this.name = name;
         this.systemId = systemId;
         this.object = object;
         this.attribute = attribute;
+        this.delay = delay;
+        this.period = period;
     }
 
     public static long getSerialVersionUID() {
@@ -61,5 +65,21 @@ public class Item  extends Model implements Serializable {
 
     public void setAttribute(String attribute) {
         this.attribute = attribute;
+    }
+
+    public long getDelay() {
+        return delay;
+    }
+
+    public void setDelay(long delay) {
+        this.delay = delay;
+    }
+
+    public long getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(long period) {
+        this.period = period;
     }
 }

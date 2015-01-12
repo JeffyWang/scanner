@@ -27,10 +27,14 @@ public interface SystemDao {
     @RegisterMapper(SystemMapper.class)
     List<System> getAll();
 
+    @SqlQuery("select * from system order by :order limit :offset, :length")
+    @RegisterMapper(SystemMapper.class)
+    List<System> getPage(@Bind("order") String order, @Bind("offset") int offset, @Bind("length") int length);
+
     @SqlUpdate("insert into system (name, host, port, createTime, updateTime) values (:name, :host, :port, :createTime, :updateTime)")
     int add(@BindBean System system);
 
-    @SqlUpdate("update system set name = :name, host = :host, port = :port, updateTime = :updateTime")
+    @SqlUpdate("update system set name = :name, host = :host, port = :port, updateTime = :updateTime where id = :id")
     int update(@BindBean System system);
 
     @SqlUpdate("delete from system where id = :id")
@@ -38,4 +42,16 @@ public interface SystemDao {
 
     @SqlUpdate("delete from system where name = :name")
     int deleteByName(@Bind("name") String name);
+
+    @SqlUpdate("CREATE TABLE IF NOT EXISTS `system` (\n" +
+            "  `id` int(8) NOT NULL AUTO_INCREMENT,\n" +
+            "  `createTime` datetime DEFAULT NULL,\n" +
+            "  `updateTime` datetime DEFAULT NULL,\n" +
+            "  `name` varchar(64) DEFAULT NULL,\n" +
+            "  `host` varchar(32) DEFAULT NULL,\n" +
+            "  `port` int(8) DEFAULT NULL,\n" +
+            "  PRIMARY KEY (`id`),\n" +
+            "  UNIQUE KEY `name` (`name`)\n" +
+            ") ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;")
+    void createTable();
 }
