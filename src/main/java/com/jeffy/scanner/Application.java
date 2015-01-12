@@ -2,7 +2,7 @@ package com.jeffy.scanner;
 
 import com.jeffy.scanner.dao.SystemDao;
 import com.jeffy.scanner.resource.SystemResource;
-import com.jeffy.scanner.resource.TestResource;
+import com.jeffy.scanner.service.SystemService;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
@@ -31,7 +31,10 @@ public class Application extends io.dropwizard.Application<Configuration> {
         //init dao
         final SystemDao systemDao = dbi.onDemand(SystemDao.class);
 
+        //init service
+        SystemService systemService = new SystemService(systemDao);
+
         //resource
-        environment.jersey().register(new SystemResource(systemDao));
+        environment.jersey().register(new SystemResource(systemService));
     }
 }

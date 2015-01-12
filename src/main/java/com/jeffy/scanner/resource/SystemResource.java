@@ -4,6 +4,7 @@ import com.jeffy.scanner.dao.SystemDao;
 import com.jeffy.scanner.mapper.SystemMapper;
 import com.jeffy.scanner.model.*;
 import com.jeffy.scanner.model.System;
+import com.jeffy.scanner.service.SystemService;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 
 import javax.ws.rs.*;
@@ -19,23 +20,23 @@ import java.util.Map;
 @Path("/system")
 @Produces(MediaType.APPLICATION_JSON)
 public class SystemResource {
-    private SystemDao dao;
+    private SystemService systemService;
 
-    public SystemResource(SystemDao dao) {
-        this.dao = dao;
+    public SystemResource(SystemService systemService) {
+        this.systemService = systemService;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSystem() {
-        return Response.ok(dao.getById(1), MediaType.APPLICATION_JSON).build();
+        return Response.ok(systemService.getSystem(1), MediaType.APPLICATION_JSON).build();
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addSystem(System system) {
-        java.lang.System.out.println(system.getCreateTime());
-        return Response.ok(dao.add(system), MediaType.APPLICATION_JSON).build();
-    }
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response addSystem(System system) {
+//        java.lang.System.out.println(system.getCreateTime());
+//        return Response.ok(dao.add(system), MediaType.APPLICATION_JSON).build();
+//    }
 }
