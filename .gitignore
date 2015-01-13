@@ -1,9 +1,5 @@
 /target/
-*/target/
-*/*/target/
-*/*/*/target/
-*/*/*/*/target/
-*/*/*/*/*/target/
-
 *.iml
 /.idea/
+/bower_components/
+/node_modules/

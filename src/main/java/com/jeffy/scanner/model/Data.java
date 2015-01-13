@@ -8,35 +8,35 @@ import java.util.Date;
  */
 public class Data extends Model implements Serializable {
     private static final long serialVersionUID = -2568631041439260399L;
-    private String key;
-    private String value;
+    private String monitorKey;
+    private String monitorValue;
     private int itemId;
 
     public Data() {
         super();
     }
 
-    public Data(int id,  String key, String value, int itemId, Date createTime, Date updateTime) {
+    public Data(int id, String monitorKey, String monitorValue, int itemId, Date createTime, Date updateTime) {
         super(id, createTime, updateTime);
-        this.key = key;
-        this.value = value;
+        this.monitorKey = monitorKey;
+        this.monitorValue = monitorValue;
         this.itemId = itemId;
     }
 
-    public String getKey() {
-        return key;
+    public String getMonitorKey() {
+        return monitorKey;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setMonitorKey(String monitorKey) {
+        this.monitorKey = monitorKey;
     }
 
-    public String getValue() {
-        return value;
+    public String getMonitorValue() {
+        return monitorValue;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setMonitorValue(String monitorValue) {
+        this.monitorValue = monitorValue;
     }
 
     public int getItemId() {
@@ -50,8 +50,8 @@ public class Data extends Model implements Serializable {
     @Override
     public String toString() {
         return "Data{" +
-                "key='" + key + '\'' +
-                ", value='" + value + '\'' +
+                "monitorKey='" + monitorKey + '\'' +
+                ", monitorValue='" + monitorValue + '\'' +
                 ", itemId=" + itemId +
                 ", createTime=" + getCreateTime() +
                 ", updateTime=" + getUpdateTime() +

@@ -1,6 +1,8 @@
 package com.jeffy.scanner.task;
 
 import com.jeffy.scanner.constants.ErrorCode;
+import com.jeffy.scanner.model.Data;
+import com.jeffy.scanner.model.Item;
 import com.jeffy.scanner.service.DataService;
 import com.jeffy.scanner.util.J4pClientUtil;
 import org.apache.log4j.Logger;
@@ -16,23 +18,29 @@ import java.util.TimerTask;
 public class MonitorTask extends TimerTask {
     private Logger log = Logger.getLogger(this.getClass());
     private DataService dataService;
+    private Item item;
     private String url;
-    private String object;
-    private String attribute;
 
-    public MonitorTask(DataService dataService, String url, String object, String attribute) {
+    public MonitorTask(DataService dataService, Item item, String url) {
         this.dataService = dataService;
+        this.item = item;
         this.url = url;
-        this.object = object;
-        this.attribute = attribute;
     }
 
     @Override
     public void run() {
         try {
-            log.debug("url : "+ url +" , object : " + object + ", attribute : " + attribute);
-            J4pResponse response = J4pClientUtil.getData(url, object, attribute);
+            log.debug("url : "+ url +" , object : " + item.getObject() + ", attribute : " + item.getAttribute());
+            J4pResponse response = J4pClientUtil.getData(url, item.getObject(), item.getAttribute());
             log.info(response.asJSONObject());
+
+            Data data = new Data();
+            data.setItemId(item.getId());
+            data.setMonitorKey(item.getObject() + "/" + item.getAttribute());
+            data.setMonitorValue(response.asJSONObject().get("value").toString());
+
+            dataService.addData(data);
+
         } catch (MalformedObjectNameException e) {
             log.error(ErrorCode.GET_MONITOR_DATA_ERROR_MESSAGE, e);
         } catch (J4pException e) {

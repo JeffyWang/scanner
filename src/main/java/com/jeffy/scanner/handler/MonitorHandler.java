@@ -32,7 +32,7 @@ public class MonitorHandler {
             List<Item> itemList = itemService.getSystemItems(system.getId());
             for (Item item : itemList) {
                 Timer timer = new Timer();
-                timer.schedule(new MonitorTask(dataService, monitorUrl, item.getObject(), item.getAttribute()), item.getDelay(), item.getPeriod());
+                timer.schedule(new MonitorTask(dataService, item, monitorUrl), item.getDelay(), item.getPeriod());
             }
         }
     }

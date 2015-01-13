@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class DataMapper implements ResultSetMapper<Data> {
     @Override
     public Data map(int i, ResultSet resultSet, StatementContext statementContext) throws SQLException {
-        return new Data(resultSet.getInt("id"), resultSet.getString("key"), resultSet.getString("value"),
+        return new Data(resultSet.getInt("id"), resultSet.getString("monitorKey"), resultSet.getString("monitorValue"),
                 resultSet.getInt("itemId"), resultSet.getTimestamp("createTime"), resultSet.getTimestamp("updateTime"));
     }
 }

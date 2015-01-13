@@ -23,7 +23,7 @@ public interface DataDao {
     @RegisterMapper(DataMapper.class)
     List<Data> getItemDataForPeriod(@Bind("itemId") int itemId, @Bind("startTime") String startTime, @Bind("endTime") String endTime);
 
-    @SqlUpdate("insert into data (key, value, itemId, createTime, updateTime) values (:key, :value, :itemId, :createTime, :updateTime)")
+    @SqlUpdate("insert into data (monitorKey, monitorValue, itemId, createTime, updateTime) values (:monitorKey, :monitorValue, :itemId, :createTime, :updateTime)")
     int add(@BindBean Data data);
 
     @SqlUpdate("delete form data where id = :id")
@@ -33,8 +33,8 @@ public interface DataDao {
             "  `id` int(8) NOT NULL AUTO_INCREMENT,\n" +
             "  `createTime` datetime DEFAULT NULL,\n" +
             "  `updateTime` datetime DEFAULT NULL,\n" +
-            "  `key` varchar(128) DEFAULT NULL,\n" +
-            "  `value` varchar(128) DEFAULT NULL,\n" +
+            "  `monitorKey` varchar(1024) DEFAULT NULL,\n" +
+            "  `monitorValue` varchar(1024) DEFAULT NULL,\n" +
             "  `itemId` int(8) DEFAULT NULL,\n" +
             "  PRIMARY KEY (`id`)\n" +
             ") ENGINE=InnoDB DEFAULT CHARSET=utf8;")

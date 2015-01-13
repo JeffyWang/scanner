@@ -58,9 +58,9 @@ public class Application extends io.dropwizard.Application<Configuration> {
         DataService dataService = new DataService(systemDao, itemDao, dataDao);
 
         //init handler
-//        log.debug("Init handler");
-//        MonitorHandler monitorHandler = new MonitorHandler(systemService, itemService, dataService);
-//        monitorHandler.execute();
+        log.debug("Init handler");
+        MonitorHandler monitorHandler = new MonitorHandler(systemService, itemService, dataService);
+        monitorHandler.execute();
 
         //resource
         log.debug("Init resource");

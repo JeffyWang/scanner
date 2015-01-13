@@ -1,0 +1,22 @@
+{
+  "name": "scanner",
+  "version": "1.0.0",
+  "homepage": "https://github.com/JeffyWang/scanner",
+  "authors": [
+    "Jeffy"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.15",
+    "react": "~0.12.2",
+    "bootstrap": "~3.3.1",
+    "backbone": "~1.1.2"
+  }
+}
