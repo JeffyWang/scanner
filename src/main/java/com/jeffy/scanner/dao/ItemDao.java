@@ -45,6 +45,9 @@ public interface ItemDao {
     @SqlUpdate("update item set name = :name, systemId = :systemId, object = :object, attribute = :attribute, delay = :delay, period = :period, updateTime = :updateTime where id = :id")
     int update(@BindBean Item item);
 
+    @SqlUpdate("delete from item where systemId = :systemId")
+    int deleteSystemItems(@Bind("systemId") int systemId);
+
     @SqlUpdate("delete from item where id = :id")
     int deleteById(@Bind("id") int id);
 
