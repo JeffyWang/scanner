@@ -38,7 +38,15 @@ public class ItemService {
     }
 
     public int addItem(Item item) {
-        return itemDao.add(item);
+        int status = itemDao.add(item);
+        System system = systemDao.getById(item.getSystemId());
+        String monitorUrl = MonitorItemUtil.getMonitorUrl(system);
+
+        Timer timer = new Timer();
+        timer.schedule(new MonitorTask(dataDao, item, monitorUrl), item.getDelay(), item.getPeriod());
+        TimerManageService.addTimer(item, timer);
+
+        return status;
     }
 
     public int updateItem(Item item) {

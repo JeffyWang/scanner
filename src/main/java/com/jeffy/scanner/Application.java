@@ -60,9 +60,9 @@ public class Application extends io.dropwizard.Application<Configuration> {
         TimerManageService timerManageService = new TimerManageService();
 
         //init handler
-        log.debug("Init handler");
-        MonitorHandler monitorHandler = new MonitorHandler(systemService, itemService, dataDao);
-        monitorHandler.execute();
+//        log.debug("Init handler");
+//        MonitorHandler monitorHandler = new MonitorHandler(systemService, itemService, dataDao);
+//        monitorHandler.execute();
 
         //resource
         log.debug("Init resource");
