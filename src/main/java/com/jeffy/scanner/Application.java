@@ -4,8 +4,7 @@ import com.jeffy.scanner.dao.DataDao;
 import com.jeffy.scanner.dao.ItemDao;
 import com.jeffy.scanner.dao.SystemDao;
 import com.jeffy.scanner.handler.MonitorHandler;
-import com.jeffy.scanner.model.Data;
-import com.jeffy.scanner.model.Item;
+import com.jeffy.scanner.model.*;
 import com.jeffy.scanner.resource.DataResource;
 import com.jeffy.scanner.resource.ItemResource;
 import com.jeffy.scanner.resource.SystemResource;
@@ -19,12 +18,13 @@ import io.dropwizard.setup.Environment;
 import org.apache.log4j.Logger;
 import org.skife.jdbi.v2.DBI;
 
+import java.util.List;
+
 /**
  * Created by jeffy on 2015/1/9 0009.
  */
 public class Application extends io.dropwizard.Application<Configuration> {
     private Logger log = Logger.getLogger(this.getClass());
-
 
     public static void main(String[] args) throws Exception {
         new Application().run(args);
@@ -53,14 +53,14 @@ public class Application extends io.dropwizard.Application<Configuration> {
 
         //init service
         log.debug("Init service");
-        SystemService systemService = new SystemService(systemDao, itemDao);
+        SystemService systemService = new SystemService(systemDao, itemDao, dataDao);
         ItemService itemService = new ItemService(systemDao, itemDao);
         DataService dataService = new DataService(systemDao, itemDao, dataDao);
 
         //init handler
-//        log.debug("Init handler");
-//        MonitorHandler monitorHandler = new MonitorHandler(systemService, itemService, dataService);
-//        monitorHandler.execute();
+        log.debug("Init handler");
+        MonitorHandler monitorHandler = new MonitorHandler(systemService, itemService, dataDao);
+        monitorHandler.execute();
 
         //resource
         log.debug("Init resource");

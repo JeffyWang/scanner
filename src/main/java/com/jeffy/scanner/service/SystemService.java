@@ -1,16 +1,16 @@
 package com.jeffy.scanner.service;
 
 import com.jeffy.scanner.constants.CommonConstants;
+import com.jeffy.scanner.dao.DataDao;
 import com.jeffy.scanner.dao.ItemDao;
 import com.jeffy.scanner.dao.SystemDao;
+import com.jeffy.scanner.handler.MonitorHandler;
 import com.jeffy.scanner.model.Item;
 import com.jeffy.scanner.model.System;
+import com.jeffy.scanner.task.MonitorTask;
 import com.jeffy.scanner.util.MonitorItemUtil;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Administrator on 2015/1/10.
@@ -18,10 +18,12 @@ import java.util.Set;
 public class SystemService {
     private SystemDao systemDao;
     private ItemDao itemDao;
+    private DataDao dataDao;
 
-    public SystemService(SystemDao systemDao, ItemDao itemDao) {
+    public SystemService(SystemDao systemDao, ItemDao itemDao, DataDao dataDao) {
         this.systemDao = systemDao;
         this.itemDao = itemDao;
+        this.dataDao = dataDao;
     }
 
     public System getSystem(int systemId) {
@@ -44,6 +46,7 @@ public class SystemService {
         int status = systemDao.add(system);
         System s = systemDao.getByName(system.getName());
 
+
         Map<String, String> defaultItem = MonitorItemUtil.getDefaultItem();
         for(Map.Entry<String, String> entry : defaultItem.entrySet()) {
             Item item = new Item();
@@ -53,6 +56,13 @@ public class SystemService {
             item.setPeriod(CommonConstants.DEFAULT_PERIOD);
             item.setSystemId(s.getId());
             itemDao.add(item);
+        }
+
+        String monitorUrl = getMonitorUrl(s);
+        List<Item> itemList = itemDao.getSystemItems(s.getId());
+        for (Item item : itemList) {
+            Timer timer = new Timer();
+            timer.schedule(new MonitorTask(dataDao, item, monitorUrl), item.getDelay(), item.getPeriod());
         }
 
         return status;
@@ -66,5 +76,9 @@ public class SystemService {
         int status = systemDao.deleteById(systemId);
         itemDao.deleteSystemItems(systemId);
         return status;
+    }
+
+    public String getMonitorUrl(System system) {
+        return "http://" + system.getHost() + ":" + system.getPort() + "/jolokia";
     }
 }

@@ -1,6 +1,7 @@
 package com.jeffy.scanner.task;
 
 import com.jeffy.scanner.constants.ErrorCode;
+import com.jeffy.scanner.dao.DataDao;
 import com.jeffy.scanner.model.Data;
 import com.jeffy.scanner.model.Item;
 import com.jeffy.scanner.service.DataService;
@@ -17,12 +18,12 @@ import java.util.TimerTask;
  */
 public class MonitorTask extends TimerTask {
     private Logger log = Logger.getLogger(this.getClass());
-    private DataService dataService;
+    private DataDao dataDao;
     private Item item;
     private String url;
 
-    public MonitorTask(DataService dataService, Item item, String url) {
-        this.dataService = dataService;
+    public MonitorTask(DataDao dataDao, Item item, String url) {
+        this.dataDao = dataDao;
         this.item = item;
         this.url = url;
     }
@@ -39,7 +40,7 @@ public class MonitorTask extends TimerTask {
             data.setMonitorKey(item.getObject() + "/" + item.getAttribute());
             data.setMonitorValue(response.asJSONObject().get("value").toString());
 
-            dataService.addData(data);
+            dataDao.add(data);
 
         } catch (MalformedObjectNameException e) {
             log.error(ErrorCode.GET_MONITOR_DATA_ERROR_MESSAGE, e);

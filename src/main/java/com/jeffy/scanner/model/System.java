@@ -52,6 +52,7 @@ public class System extends Model implements Serializable {
     @Override
     public String toString() {
         return "System{" +
+                "id='" + getId() + '\'' +
                 "name='" + name + '\'' +
                 ", host='" + host + '\'' +
                 ", port=" + port +

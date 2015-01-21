@@ -1,5 +1,6 @@
 package com.jeffy.scanner.handler;
 
+import com.jeffy.scanner.dao.DataDao;
 import com.jeffy.scanner.model.Item;
 import com.jeffy.scanner.model.System;
 import com.jeffy.scanner.service.DataService;
@@ -16,12 +17,16 @@ import java.util.Timer;
 public class MonitorHandler {
     private SystemService systemService;
     private ItemService itemService;
-    private DataService dataService;
+    private DataDao dataDao;
 
-    public MonitorHandler(SystemService systemService, ItemService itemService, DataService dataService) {
+    public MonitorHandler() {
+
+    }
+
+    public MonitorHandler(SystemService systemService, ItemService itemService, DataDao dataDao) {
         this.systemService = systemService;
         this.itemService = itemService;
-        this.dataService = dataService;
+        this.dataDao = dataDao;
     }
 
     public void execute() {
@@ -32,7 +37,7 @@ public class MonitorHandler {
             List<Item> itemList = itemService.getSystemItems(system.getId());
             for (Item item : itemList) {
                 Timer timer = new Timer();
-                timer.schedule(new MonitorTask(dataService, item, monitorUrl), item.getDelay(), item.getPeriod());
+                timer.schedule(new MonitorTask(dataDao, item, monitorUrl), item.getDelay(), item.getPeriod());
             }
         }
     }
