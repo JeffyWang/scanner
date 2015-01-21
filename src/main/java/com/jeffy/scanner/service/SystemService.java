@@ -58,11 +58,12 @@ public class SystemService {
             itemDao.add(item);
         }
 
-        String monitorUrl = getMonitorUrl(s);
+        String monitorUrl = MonitorItemUtil.getMonitorUrl(s);
         List<Item> itemList = itemDao.getSystemItems(s.getId());
         for (Item item : itemList) {
             Timer timer = new Timer();
             timer.schedule(new MonitorTask(dataDao, item, monitorUrl), item.getDelay(), item.getPeriod());
+            TimerManageService.addTimer(item, timer);
         }
 
         return status;
@@ -76,9 +77,5 @@ public class SystemService {
         int status = systemDao.deleteById(systemId);
         itemDao.deleteSystemItems(systemId);
         return status;
-    }
-
-    public String getMonitorUrl(System system) {
-        return "http://" + system.getHost() + ":" + system.getPort() + "/jolokia";
     }
 }

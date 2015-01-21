@@ -1,6 +1,7 @@
 package com.jeffy.scanner.util;
 
 import com.jeffy.scanner.constants.MonitorConstants;
+import com.jeffy.scanner.model.System;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,5 +18,9 @@ public class MonitorItemUtil {
         defaultItem.put(MonitorConstants.CPU_OBJECT, MonitorConstants.CPU_PROCESS_CPU_LOAD);
 
         return defaultItem;
+    }
+
+    public static String getMonitorUrl(System system) {
+        return "http://" + system.getHost() + ":" + system.getPort() + "/jolokia";
     }
 }

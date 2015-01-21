@@ -11,6 +11,7 @@ import com.jeffy.scanner.resource.SystemResource;
 import com.jeffy.scanner.service.DataService;
 import com.jeffy.scanner.service.ItemService;
 import com.jeffy.scanner.service.SystemService;
+import com.jeffy.scanner.service.TimerManageService;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
@@ -54,8 +55,9 @@ public class Application extends io.dropwizard.Application<Configuration> {
         //init service
         log.debug("Init service");
         SystemService systemService = new SystemService(systemDao, itemDao, dataDao);
-        ItemService itemService = new ItemService(systemDao, itemDao);
+        ItemService itemService = new ItemService(itemDao, systemDao, dataDao);
         DataService dataService = new DataService(systemDao, itemDao, dataDao);
+        TimerManageService timerManageService = new TimerManageService();
 
         //init handler
         log.debug("Init handler");

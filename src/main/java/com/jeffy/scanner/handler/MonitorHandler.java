@@ -3,12 +3,15 @@ package com.jeffy.scanner.handler;
 import com.jeffy.scanner.dao.DataDao;
 import com.jeffy.scanner.model.Item;
 import com.jeffy.scanner.model.System;
-import com.jeffy.scanner.service.DataService;
 import com.jeffy.scanner.service.ItemService;
 import com.jeffy.scanner.service.SystemService;
+import com.jeffy.scanner.service.TimerManageService;
 import com.jeffy.scanner.task.MonitorTask;
+import com.jeffy.scanner.util.MonitorItemUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 
 /**
@@ -33,16 +36,13 @@ public class MonitorHandler {
         List<System> systemList = systemService.getAllSystem();
 
         for (System system : systemList) {
-            String monitorUrl = getMonitorUrl(system);
+            String monitorUrl = MonitorItemUtil.getMonitorUrl(system);
             List<Item> itemList = itemService.getSystemItems(system.getId());
             for (Item item : itemList) {
                 Timer timer = new Timer();
                 timer.schedule(new MonitorTask(dataDao, item, monitorUrl), item.getDelay(), item.getPeriod());
+                TimerManageService.addTimer(item, timer);
             }
         }
-    }
-
-    public String getMonitorUrl(System system) {
-        return "http://" + system.getHost() + ":" + system.getPort() + "/jolokia";
     }
 }

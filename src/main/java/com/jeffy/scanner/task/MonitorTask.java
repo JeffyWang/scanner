@@ -5,6 +5,7 @@ import com.jeffy.scanner.dao.DataDao;
 import com.jeffy.scanner.model.Data;
 import com.jeffy.scanner.model.Item;
 import com.jeffy.scanner.service.DataService;
+import com.jeffy.scanner.service.TimerManageService;
 import com.jeffy.scanner.util.J4pClientUtil;
 import org.apache.log4j.Logger;
 import org.jolokia.client.exception.J4pException;
@@ -41,11 +42,14 @@ public class MonitorTask extends TimerTask {
             data.setMonitorValue(response.asJSONObject().get("value").toString());
 
             dataDao.add(data);
+            log.debug("#########################");
+            log.debug(TimerManageService.TIMER_POOL.size());
+
 
         } catch (MalformedObjectNameException e) {
-            log.error(ErrorCode.GET_MONITOR_DATA_ERROR_MESSAGE, e);
+            log.error(ErrorCode.GET_MONITOR_DATA_ERROR_MESSAGE + "object [ " + item.getObject() + " ] is not exist");
         } catch (J4pException e) {
-            log.error(ErrorCode.GET_MONITOR_DATA_ERROR_MESSAGE, e);
+            log.error(ErrorCode.GET_MONITOR_DATA_ERROR_MESSAGE + "get monitor data error for url [ " + url + " ]");
         }
     }
 }
