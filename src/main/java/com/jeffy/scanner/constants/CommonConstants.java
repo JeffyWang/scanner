@@ -9,4 +9,7 @@ public interface CommonConstants {
 
     final static long DEFAULT_DELAY = 5000;
     final static long DEFAULT_PERIOD = 5000;
+
+    final static String MONITOR_STATUS_ON = "on";
+    final static String MONITOR_STATUS_OFF = "off";
 }

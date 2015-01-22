@@ -13,16 +13,18 @@ public class System extends Model implements Serializable {
     private String name;
     private String host;
     private int port;
+    private String status;
 
     public System() {
         super();
     }
 
-    public System(int id, String name, String host, int port, Date createTime, Date updateTime) {
+    public System(int id, String name, String host, int port, String status, Date createTime, Date updateTime) {
         super(id, createTime, updateTime);
         this.name = name;
         this.host = host;
         this.port = port;
+        this.status = status;
     }
 
     public String getName() {
@@ -49,6 +51,14 @@ public class System extends Model implements Serializable {
         this.port = port;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "System{" +
@@ -56,6 +66,7 @@ public class System extends Model implements Serializable {
                 "name='" + name + '\'' +
                 ", host='" + host + '\'' +
                 ", port=" + port +
+                ", status=" + status +
                 ", createTime=" + getCreateTime() +
                 ", updateTime=" + getUpdateTime() +
                 '}';

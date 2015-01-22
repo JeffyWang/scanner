@@ -15,11 +15,11 @@ import java.util.List;
  * Created by Jeffy on 2015/1/12 0012.
  */
 public interface DataDao {
-    @SqlQuery("select * from item where itemId = :itemId")
+    @SqlQuery("select * from data where itemId = :itemId")
     @RegisterMapper(DataMapper.class)
     List<Data> getItemData(@Bind("itemId") int itemId);
 
-    @SqlQuery("select * from item where createTime between :startTime and :endTime")
+    @SqlQuery("select * from data where createTime between :startTime and :endTime and itemId = :itemId")
     @RegisterMapper(DataMapper.class)
     List<Data> getItemDataForPeriod(@Bind("itemId") int itemId, @Bind("startTime") String startTime, @Bind("endTime") String endTime);
 

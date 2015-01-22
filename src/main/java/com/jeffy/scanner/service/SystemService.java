@@ -4,7 +4,6 @@ import com.jeffy.scanner.constants.CommonConstants;
 import com.jeffy.scanner.dao.DataDao;
 import com.jeffy.scanner.dao.ItemDao;
 import com.jeffy.scanner.dao.SystemDao;
-import com.jeffy.scanner.handler.MonitorHandler;
 import com.jeffy.scanner.model.Item;
 import com.jeffy.scanner.model.System;
 import com.jeffy.scanner.task.MonitorTask;
@@ -43,9 +42,18 @@ public class SystemService {
     }
 
     public int addSystem(System system) {
-        int status = systemDao.add(system);
-        System s = systemDao.getByName(system.getName());
+        int status = 0;
+        System s = null;
 
+        if (system.getStatus() == null) {
+            system.setStatus(CommonConstants.MONITOR_STATUS_OFF);
+            status = systemDao.add(system);
+            s = systemDao.getByName(system.getName());
+            return status;
+        }
+
+        status = systemDao.add(system);
+        s = systemDao.getByName(system.getName());
 
         Map<String, String> defaultItem = MonitorItemUtil.getDefaultItem();
         for(Map.Entry<String, String> entry : defaultItem.entrySet()) {
@@ -76,6 +84,39 @@ public class SystemService {
     public int deleteSystem(int systemId) {
         int status = systemDao.deleteById(systemId);
         itemDao.deleteSystemItems(systemId);
+        return status;
+    }
+
+    public int startMonitorSystem(int systemId) {
+        System system = systemDao.getById(systemId);
+        system.setStatus(CommonConstants.MONITOR_STATUS_ON);
+
+        int status = systemDao.update(system);
+        List<Item> itemList = itemDao.getSystemItems(systemId);
+        String monitorUrl = MonitorItemUtil.getMonitorUrl(system);
+
+        for(Item item : itemList) {
+            Timer timer = new Timer();
+            timer.schedule(new MonitorTask(dataDao, item, monitorUrl), item.getDelay(), item.getPeriod());
+            TimerManageService.addTimer(item, timer);
+        }
+
+        return status;
+    }
+
+    public int stopMonitorSystem(int systemId) {
+        System system = systemDao.getById(systemId);
+        system.setStatus(CommonConstants.MONITOR_STATUS_OFF);
+
+        int status = systemDao.update(system);
+        List<Item> itemList = itemDao.getSystemItems(systemId);
+
+        for(Item item : itemList) {
+            Timer timer = TimerManageService.getTimer(item);
+            timer.cancel();
+            TimerManageService.deleteTimer(item);
+        }
+
         return status;
     }
 }

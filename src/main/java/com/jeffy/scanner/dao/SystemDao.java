@@ -31,10 +31,10 @@ public interface SystemDao {
     @RegisterMapper(SystemMapper.class)
     List<System> getPage(@Bind("order") String order, @Bind("offset") int offset, @Bind("length") int length);
 
-    @SqlUpdate("insert into system (name, host, port, createTime, updateTime) values (:name, :host, :port, :createTime, :updateTime)")
+    @SqlUpdate("insert into system (name, host, port, status, createTime, updateTime) values (:name, :host, :port, :status, :createTime, :updateTime)")
     int add(@BindBean System system);
 
-    @SqlUpdate("update system set name = :name, host = :host, port = :port, updateTime = :updateTime where id = :id")
+    @SqlUpdate("update system set name = :name, host = :host, port = :port, status = :status, updateTime = :updateTime where id = :id")
     int update(@BindBean System system);
 
     @SqlUpdate("delete from system where id = :id")
@@ -50,6 +50,7 @@ public interface SystemDao {
             "  `name` varchar(64) DEFAULT NULL,\n" +
             "  `host` varchar(32) DEFAULT NULL,\n" +
             "  `port` int(8) DEFAULT NULL,\n" +
+            "  `status` int(8) DEFAULT NULL,\n" +
             "  PRIMARY KEY (`id`),\n" +
             "  UNIQUE KEY `name` (`name`)\n" +
             ") ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;")

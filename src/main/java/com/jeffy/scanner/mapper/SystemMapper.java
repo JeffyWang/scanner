@@ -19,6 +19,7 @@ public class SystemMapper implements ResultSetMapper<System> {
     @Override
     public System map(int i, ResultSet resultSet, StatementContext statementContext) throws SQLException {
         return new System(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("host"),
-                resultSet.getInt("port"), resultSet.getTimestamp("createTime"), resultSet.getTimestamp("updateTime"));
+                resultSet.getInt("port"), resultSet.getString("status"), resultSet.getTimestamp("createTime"),
+                resultSet.getTimestamp("updateTime"));
     }
 }

@@ -95,6 +95,38 @@ public class SystemResource {
         return Response.ok(new com.jeffy.scanner.bo.Response(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MESSAGE)).build();
     }
 
+    @PUT
+    @Path("/start/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response startSystem(@PathParam("id") int systemId) {
+
+        try {
+            int status = systemService.startMonitorSystem(systemId);
+        } catch (Exception e) {
+            log.error(ErrorCode.START_MONITOR_SYSTEM_ERROR_CODE, e);
+            return Response.ok(new com.jeffy.scanner.bo.Response(ErrorCode.START_MONITOR_SYSTEM_ERROR_CODE, ErrorCode.START_MONITOR_SYSTEM_ERROR_MESSAGE + e.getMessage())).status(500).build();
+        }
+
+        return Response.ok(new com.jeffy.scanner.bo.Response(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MESSAGE)).build();
+    }
+
+    @PUT
+    @Path("/stop/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response stopSystem(@PathParam("id") int systemId) {
+
+        try {
+            int status = systemService.stopMonitorSystem(systemId);
+        } catch (Exception e) {
+            log.error(ErrorCode.STOP_MONITOR_SYSTEM_ERROR_CODE, e);
+            return Response.ok(new com.jeffy.scanner.bo.Response(ErrorCode.STOP_MONITOR_SYSTEM_ERROR_CODE, ErrorCode.STOP_MONITOR_SYSTEM_ERROR_MESSAGE + e.getMessage())).status(500).build();
+        }
+
+        return Response.ok(new com.jeffy.scanner.bo.Response(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MESSAGE)).build();
+    }
+
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)

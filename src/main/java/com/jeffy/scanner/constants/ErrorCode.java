@@ -17,6 +17,10 @@ public interface ErrorCode {
     final static String UPDATE_SYSTEM_ERROR_MESSAGE = "Update system information error : ";
     final static String DELETE_SYSTEM_ERROR_CODE = "S005";
     final static String DELETE_SYSTEM_ERROR_MESSAGE = "Delete system error : ";
+    final static String START_MONITOR_SYSTEM_ERROR_CODE = "S006";
+    final static String START_MONITOR_SYSTEM_ERROR_MESSAGE = "Start monitor system error : ";
+    final static String STOP_MONITOR_SYSTEM_ERROR_CODE = "S007";
+    final static String STOP_MONITOR_SYSTEM_ERROR_MESSAGE = "Stop monitor system error : ";
 
     final static String GET_ITEM_ERROR_CODE = "I001";
     final static String GET_ITEM_ERROR_MESSAGE = "Get item information error : ";
@@ -30,4 +34,9 @@ public interface ErrorCode {
     final static String UPDATE_ITEM_ERROR_MESSAGE = "Update item information error : ";
     final static String DELETE_ITEM_ERROR_CODE = "I006";
     final static String DELETE_ITEM_ERROR_MESSAGE = "Delete item error : ";
+
+    final static String GET_ITEM_ALL_DATA_ERROR_CODE = "D001";
+    final static String GET_ITEM_ALL_DATA_ERROR_MESSAGE = "Get item's all data error : ";
+    final static String GET_ITEM_PERIOD_DATA_ERROR_CODE = "D002";
+    final static String GET_ITEM_PERIOD_DATA_ERROR_MESSAGE = "Get item's period data error : ";
 }

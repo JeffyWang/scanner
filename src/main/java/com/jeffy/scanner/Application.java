@@ -57,12 +57,11 @@ public class Application extends io.dropwizard.Application<Configuration> {
         SystemService systemService = new SystemService(systemDao, itemDao, dataDao);
         ItemService itemService = new ItemService(itemDao, systemDao, dataDao);
         DataService dataService = new DataService(systemDao, itemDao, dataDao);
-        TimerManageService timerManageService = new TimerManageService();
 
         //init handler
-//        log.debug("Init handler");
-//        MonitorHandler monitorHandler = new MonitorHandler(systemService, itemService, dataDao);
-//        monitorHandler.execute();
+        log.debug("Init handler");
+        MonitorHandler monitorHandler = new MonitorHandler(systemService, itemService, dataDao);
+        monitorHandler.execute();
 
         //resource
         log.debug("Init resource");
@@ -70,5 +69,4 @@ public class Application extends io.dropwizard.Application<Configuration> {
         environment.jersey().register(new ItemResource(itemService));
         environment.jersey().register(new DataResource(dataService));
     }
-
 }

@@ -42,10 +42,6 @@ public class MonitorTask extends TimerTask {
             data.setMonitorValue(response.asJSONObject().get("value").toString());
 
             dataDao.add(data);
-            log.debug("#########################");
-            log.debug(TimerManageService.TIMER_POOL.size());
-
-
         } catch (MalformedObjectNameException e) {
             log.error(ErrorCode.GET_MONITOR_DATA_ERROR_MESSAGE + "object [ " + item.getObject() + " ] is not exist");
         } catch (J4pException e) {
