@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     bower: {
       install: {
         options: {
-          targetDir: './src/main/resources/static/lib',
+          targetDir: './src/main/resources/static/js/lib',
           layout: 'byType',
           install: true,
           verbose: false,
